@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "15568065126",
+    "firebase_url": "https://immerse-reader-b0307.firebaseio.com",
+    "project_id": "immerse-reader-b0307",
+    "storage_bucket": "immerse-reader-b0307.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15568065126:android:1c3b888211197f05",
+        "android_client_info": {
+          "package_name": "com.immersereadernative"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "15568065126-v6ujt12qr5eopvohqsjhg63i9ajfge0p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.immersereadernative",
+            "certificate_hash": "916ac52e092bae369efe76baefcd8174b2d654ba"
+          }
+        },
+        {
+          "client_id": "15568065126-7ask5qlkp8h3mga58ignsl35gda4l3s3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3l4Rka4esy2RUC-cMOb2qf2P6yFztyo4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "15568065126-rvnrh8ihk6k2r6rlpoaurd0u55sgga70.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
