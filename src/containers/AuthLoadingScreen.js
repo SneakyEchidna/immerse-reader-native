@@ -10,6 +10,7 @@ class AuthLoadingScreen extends React.Component {
         : this.props.navigation.navigate('Auth');
     });
   }
+
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

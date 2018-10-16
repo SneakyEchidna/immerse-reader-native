@@ -19,8 +19,8 @@ const ReaderDrawer = createDrawerNavigator(
   { contentComponent: DefinitionScreen }
 );
 const AppStack = createStackNavigator({
-  BooksDrawer: BooksDrawer,
-  ReaderDrawer: ReaderDrawer
+  BooksDrawer,
+  ReaderDrawer
 });
 const AuthStack = createStackNavigator({
   Home: HomeScreen

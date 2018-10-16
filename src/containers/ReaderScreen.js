@@ -7,10 +7,8 @@ class ReaderScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <Epub
-          src={
-            'https://s3.amazonaws.com/epubjs/books/moby-dick/OPS/package.opf'
-          }
-          flow={'paginated'}
+          src="https://s3.amazonaws.com/epubjs/books/moby-dick/OPS/package.opf"
+          flow="paginated"
         />
       </View>
     );

@@ -24,15 +24,19 @@
     "react-redux": "^5.0.7",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
-    "redux-saga": "^0.16.2"
+    "redux-saga": "^0.16.2",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "babel-jest": "23.6.0",
-    "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
+    "eslint_d": "^7.1.1",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.48.1",
     "prettier": "^1.14.3",

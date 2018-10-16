@@ -1,11 +1,7 @@
 import React from 'react';
 import { View, Text, Button, TouchableOpacity } from 'react-native';
 import firebase from 'react-native-firebase';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes
-} from 'react-native-google-signin';
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
 class HomeScreen extends React.Component {
   componentDidMount() {
@@ -16,7 +12,9 @@ class HomeScreen extends React.Component {
     });
     console.log(firebase.auth().currentUser);
   }
+
   navigateToBooks = () => this.props.navigation.navigate('BooksDrawer');
+
   signIn = () => {
     GoogleSignin.signIn()
       .then(data => {
@@ -30,7 +28,9 @@ class HomeScreen extends React.Component {
       })
       .then(user => {
         console.log(this.props);
-        user && this.navigateToBooks();
+        if (user) {
+          this.navigateToBooks();
+        }
         // If you need to do anything with the user, do it here
         // The user will be logged in automatically by the
         // `onAuthStateChanged` listener we set up in App.js earlier
@@ -42,14 +42,16 @@ class HomeScreen extends React.Component {
         // representation of the error
       });
   };
+
   render() {
+    const { navigation } = this.props;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
         <TouchableOpacity>
           <Button
             title="Reader"
-            onPress={() => this.props.navigation.navigate('ReaderDrawer')}
+            onPress={() => navigation.navigate('ReaderDrawer')}
           />
         </TouchableOpacity>
         <GoogleSigninButton
