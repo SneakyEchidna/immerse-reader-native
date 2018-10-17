@@ -73,7 +73,8 @@ export class Storage {
 
   getBook = (uid, name) =>
     firebase.storage
-      .ref(`/books/${uid}/${name}.epub`)
+      // .ref(`/books/${uid}/${name}.epub`)
+      .ref(`${name}.epub`)
       .getDownloadURL()
       .catch(error => {
         // Handle any errors
