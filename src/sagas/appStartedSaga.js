@@ -1,12 +1,19 @@
-import { takeEvery, put, take } from 'redux-saga/effects';
+import { takeLatest, select, put, take } from 'redux-saga/effects';
 import { eventChannel } from 'redux-saga';
+import { NavigationActions } from 'react-navigation';
 import { firebase } from '../firebase';
 import { setUser } from '../actions';
 import { APP_STARTED } from '../actions/actionTypes';
+import { getUid } from '../reducers/userReducer';
 
 function* callAppStarted() {
+  if (firebase.auth.currentUser) {
+    yield put(NavigationActions.navigate({ routeName: 'App' }));
+  } else {
+    yield put(NavigationActions.navigate({ routeName: 'Auth' }));
+  }
+
   const channel = eventChannel(emitter => {
-console.log(firebase.auth)
     firebase.auth.onAuthStateChanged(authUser =>
       emitter(authUser || { displayName: null, uid: null })
     );
@@ -15,8 +22,19 @@ console.log(firebase.auth)
   while (true) {
     const authUser = yield take(channel);
     yield put(setUser(authUser.displayName, authUser.uid));
+    if (authUser === null) {
+      yield put(NavigationActions.navigate({ routeName: 'Auth' }));
+    } else {
+      yield put(NavigationActions.navigate({ routeName: 'App' }));
+    }
   }
 }
 export default function* appStartedSaga() {
-  yield takeEvery(APP_STARTED, callAppStarted);
+  const now = new Date();
+  console.log(
+    'app start saga listener started',
+    now.getSeconds(),
+    now.getMilliseconds()
+  );
+  yield takeLatest(APP_STARTED, callAppStarted);
 }
