@@ -3,6 +3,7 @@ package com.immersereadernative;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import ui.fileselector.RNFileSelectorPackage;
 import com.rnziparchive.RNZipArchivePackage;
 import com.futurepress.staticserver.FPStaticServerPackage;
 import com.github.yamill.orientation.OrientationPackage;
@@ -33,6 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFileSelectorPackage(),
             new RNZipArchivePackage(),
             new FPStaticServerPackage(),
             new OrientationPackage(),

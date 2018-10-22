@@ -136,7 +136,20 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url  "http://dl.bintray.com/lukaville/maven"
+    }
+}
+allprojects {
+    repositories {
+        mavenLocal()
+        jcenter()
+        maven { url "https://maven.google.com" }
+    }
+}
 dependencies {
+    compile project(':react-native-file-selector')
     compile project(':react-native-zip-archive')
     compile project(':react-native-static-server')
     compile project(':react-native-orientation')
@@ -149,6 +162,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "com.google.android.gms:play-services-base:16.0.1"
+    implementation 'com.android.support:design:27.1.1'
     implementation "com.google.firebase:firebase-core:16.0.4"
     implementation "com.google.firebase:firebase-database:16.0.3"
     implementation "com.google.firebase:firebase-auth:16.0.4"
