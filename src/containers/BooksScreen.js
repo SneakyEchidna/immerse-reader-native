@@ -19,10 +19,14 @@ class BooksScreen extends React.Component {
       booksList,
       openBook,
       deleteBook,
-      loadBooksList
+      loadBooksList,
+      navigation
     } = this.props;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <TouchableOpacity>
+          <Text onPress={navigation.openDrawer}>Upload Book</Text>
+        </TouchableOpacity>
         <FlatList
           data={booksList}
           onRefresh={loadBooksList}

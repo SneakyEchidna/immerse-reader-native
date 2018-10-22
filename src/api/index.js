@@ -25,14 +25,16 @@ export default class Db {
     });
   };
 
-  getWordFromStore = word =>
+  getWordFromStore = word => 
     this.definitionsRef
       .child(word)
       .once('value')
       .then(snapshot => {
         const definitions = snapshot.val();
         return definitions;
-      });
+     })
+      .catch(e => console.log(e));
+  
 
   addWord = (uid, word, definitions) => {
     firebase.db.ref(`/wordlists/${uid}/${word}`).set(definitions);
@@ -73,8 +75,7 @@ export class Storage {
 
   getBook = (uid, name) =>
     firebase.storage
-      // .ref(`/books/${uid}/${name}.epub`)
-      .ref(`${name}.epub`)
+      .ref(`/books/${uid}/${name}.epub`)
       .getDownloadURL()
       .catch(error => {
         // Handle any errors

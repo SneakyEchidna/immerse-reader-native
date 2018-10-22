@@ -1,4 +1,11 @@
-import { takeEvery, select, put, take, call } from 'redux-saga/effects';
+import {
+  takeEvery,
+  takeLatest,
+  select,
+  put,
+  take,
+  call
+} from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { NavigationActions } from 'react-navigation';
 import { getUid } from '../reducers/userReducer';
@@ -19,7 +26,9 @@ import {
 } from '../actions';
 import { Storage } from '../api';
 import { getKey } from '../reducers/booksReducer';
-import { Streamer } from 'epubjs-rn';
+// import { Streamer } from 'epubjs-rn';
+import Streamer from '../api/Streamer';
+
 const storage = new Storage();
 const streamer = new Streamer();
 
@@ -74,9 +83,8 @@ function* callOpenBook({ payload }) {
     uid = yield select(getUid);
   }
   const book = yield storage.getBook(uid, payload.key);
-  console.log(book);
+  const re = /[^\%2]+(?=\?)/g;
   const unpacked = yield call(unpackBook, book);
-  console.log(unpacked);
   yield put(
     openBookSuccess(
       payload.name,
@@ -87,8 +95,7 @@ function* callOpenBook({ payload }) {
       stream
     )
   );
-  yield delay(2000);
-  // yield put(setLocation(payload.bookmark));
+  yield put(setLocation(payload.bookmark));
   yield put(NavigationActions.navigate({ routeName: 'Reader' }));
 }
 
@@ -129,7 +136,7 @@ export function* loadBooksListSaga() {
   yield takeEvery(LOAD_BOOKS_LIST, callLoadBooksList);
 }
 export function* openBookSaga() {
-  yield takeEvery(OPEN_BOOK, callOpenBook);
+  yield takeLatest(OPEN_BOOK, callOpenBook);
 }
 export function* deleteBookSaga() {
   yield takeEvery(DELETE_BOOK, callDeleteBook);

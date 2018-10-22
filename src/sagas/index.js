@@ -1,4 +1,13 @@
-import { fork, put, all, select, takeEvery } from 'redux-saga/effects';
+import {
+  fork,
+  call,
+  put,
+  all,
+  select,
+  takeEvery,
+  takeLatest
+} from 'redux-saga/effects';
+import { DrawerActions } from 'react-navigation';
 import {
   GET_DEFINITIONS,
   SET_LOCATION,
@@ -17,44 +26,54 @@ import {
   saveBookmarkSaga
 } from './books';
 import { getKey } from '../reducers/booksReducer';
-import { getDefinitionState } from '../reducers/definitionReducer';
+import {
+  getDefinitionState,
+  getDefinitionWord
+} from '../reducers/definitionReducer';
 
 const db = new Db();
 function* callGetDefinitions({ payload }) {
+  const lastWord = yield select(getDefinitionWord);
+
   const callApi = async word => {
     let body;
-    const firebaseRes = db.getWordFromStore(word);
-    body = await firebaseRes;
-    if (!body) {
-      const response = await fetch(`/api/definitions/${word}`).catch(() => [
-        `No exact matches found for "${word}"`
-      ]);
+    console.log('going to fetch word', word);
+    const getWordDefinition = wordId =>
+      fetch(`https://dictionary-parser.herokuapp.com/api/definitions/${wordId}`)
+        .then(a => a)
+        .then(a => a.json())
+        .catch(e => console.log(e));
+    // const firebaseRes = db.getWordFromStore(word);
+    // console.log('out of firebase', db);
+    // body = await firebaseRes;
+    // console.log('fire body', body);
+    // if (!body) {
+    const response = await getWordDefinition(word);
+    if (response) {
       body = response;
-      try {
-        body = await response.json();
-      } catch (error) {
-        body = [`No exact matches found for "${word}"`];
-      }
-    }
+    } else body = [];
     return body;
   };
 
-  const def = yield callApi(payload);
-  yield put(setDefinitions(payload, def));
-  const isOpen = yield select(getDefinitionState);
-  if (!isOpen) {
-    yield put(toggleDefinition());
+  if (payload !== lastWord) {
+    const def = yield call(callApi, payload);
+    yield put(setDefinitions(payload || [], def));
+    const isOpen = yield select(getDefinitionState);
+    yield put(DrawerActions.openDrawer());
+    if (!isOpen) {
+      yield put(toggleDefinition());
+    }
   }
 }
 
 function* callSetLocation({ payload }) {
   const key = yield select(getKey);
   const location = payload;
-  yield localStorage.setItem(key, JSON.stringify(location));
+  // yield localStorage.setItem(key, JSON.stringify(location));
 }
 
 function* getdefinitionsSaga() {
-  yield takeEvery(GET_DEFINITIONS, callGetDefinitions);
+  yield takeLatest(GET_DEFINITIONS, callGetDefinitions);
 }
 function* setLocationSaga() {
   yield takeEvery(SET_LOCATION, callSetLocation);

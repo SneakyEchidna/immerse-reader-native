@@ -13,6 +13,11 @@ import {
 
 class ReaderScreen extends React.Component {
   state = {};
+
+  book = {};
+
+  rendition = {};
+
   locationChange = epubcfi => {
     const {
       setLocation,
@@ -21,30 +26,69 @@ class ReaderScreen extends React.Component {
     name && setLocation(epubcfi);
   };
 
+  debounce = (func, wait, immediate) => {
+    let timeout;
+    return function executedFunction() {
+      const context = this;
+      const args = arguments;
+      const later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      const callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) func.apply(context, args);
+    };
+  };
+
+  findDefinition = this.debounce(cfiRange => {
+    const { getDefinitions } = this.props;
+    this.book
+      .getRange(cfiRange.toString())
+      .then(range =>
+        getDefinitions(
+          range.startContainer.data.slice(range.startOffset, range.endOffset)
+        )
+      );
+  }, 500);
+
+  getRendition = rendition => {
+    this.rendition = rendition;
+  };
+
   renderLocation() {
     const { location } = this.props;
     if (location) return { location };
   }
+
+  bookReady = loadedBook => {
+    this.book = loadedBook;
+  };
+
+  onSelect = (cfiRange, rendition) => {
+    // Add marker
+    rendition.highlight(cfiRange, {});
+  };
+
   render() {
     const {
       currentBook: { name },
       currentBook: { book },
-      currentBook: { origin }
+      getDefinitions
     } = this.props;
-    console.log(origin);
+
     return (
       <View style={{ flex: 1 }}>
         <Epub
           src={book}
           {...this.renderLocation()}
           locationChanged={this.locationChange}
-          getRendition={this.getRendition}
+          getRendition={this.rendition}
           flow="paginated"
-          onReady={f => {
-            console.log('Metadata', f.package.metadata);
-            console.log('Table of Contents', f.toc);
-            setTimeout(console.log, 5000, 'f', f);
-          }}
+          onReady={this.bookReady}
+          onSelected={this.onSelect}
+          onMarkClicked={this.findDefinition}
         />
       </View>
     );
