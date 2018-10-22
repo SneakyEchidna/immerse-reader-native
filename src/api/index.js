@@ -32,7 +32,8 @@ export default class Db {
       .then(snapshot => {
         const definitions = snapshot.val();
         return definitions;
-      });
+      })
+      .catch(e => console.log(e));
 
   addWord = (uid, word, definitions) => {
     firebase.db.ref(`/wordlists/${uid}/${word}`).set(definitions);
@@ -59,17 +60,20 @@ export class Storage {
     const id = uuid();
     return firebase.storage
       .ref(`/books/${uid}/${id}.epub`)
-      .put(file, metadata)
+      .putFile(file, metadata)
       .then(() =>
         firebase.db.ref(`/users/${uid}/books/${id}`).set({ name, author })
-      );
+      )
+      .catch(e => console.log(e));
   };
 
-  getBooks = uid =>
-    firebase.db
+  getBooks = uid => {
+    console.log(uid);
+    return firebase.db
       .ref(`/users/${uid}/books`)
       .once('value')
-      .then(snap => snap.val() || {});
+      .then(snap => snap.val());
+  };
 
   getBook = (uid, name) =>
     firebase.storage

@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import firebase from 'react-native-firebase';
+import { connect } from 'react-redux';
+import { appStarted } from '../actions';
 
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      user
-        ? this.props.navigation.navigate('App')
-        : this.props.navigation.navigate('Auth');
-    });
+    const { appStarted } = this.props;
+    const now = new Date();
+    console.log('Launched', now.getSeconds(), now.getMilliseconds());
+    appStarted();
   }
 
   render() {
@@ -20,4 +21,10 @@ class AuthLoadingScreen extends React.Component {
   }
 }
 
-export default AuthLoadingScreen;
+const mapDispatchToProps = dispatch => ({
+  appStarted: () => dispatch(appStarted())
+});
+export default connect(
+  null,
+  mapDispatchToProps
+)(AuthLoadingScreen);

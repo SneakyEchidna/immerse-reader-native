@@ -3,6 +3,11 @@ import {
   createDrawerNavigator,
   createSwitchNavigator
 } from 'react-navigation';
+import { connect } from 'react-redux';
+import {
+  reduxifyNavigator,
+  createReactNavigationReduxMiddleware
+} from 'react-navigation-redux-helpers';
 import HomeScreen from '../containers/HomeScreen';
 import ReaderScreen from '../containers/ReaderScreen';
 import DefinitionScreen from '../containers/DefinitionScreen';
@@ -26,7 +31,16 @@ const AuthStack = createStackNavigator({
   Home: HomeScreen
 });
 
-export default createSwitchNavigator(
+const middleware = createReactNavigationReduxMiddleware(
+  'root',
+  state => state.nav
+);
+
+const mapStateToProps = state => ({
+  state: state.nav
+});
+
+const rootNavigator = createSwitchNavigator(
   {
     App: AppStack,
     Auth: AuthStack,
@@ -36,3 +50,9 @@ export default createSwitchNavigator(
     initialRouteName: 'AuthLoading'
   }
 );
+
+const App = reduxifyNavigator(rootNavigator, 'root');
+
+const AppNavigator = connect(mapStateToProps)(App);
+
+export { AppNavigator, middleware, rootNavigator };

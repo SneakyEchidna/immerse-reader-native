@@ -111,9 +111,9 @@ export const openBook = book => ({
   payload: book
 });
 
-export const openBookSuccess = (name, author, book, key, bookmark) => ({
+export const openBookSuccess = (name, author, book, key, bookmark, origin) => ({
   type: OPEN_BOOK_SUCCESS,
-  payload: { name, author, book, key, bookmark }
+  payload: { name, author, book, key, bookmark, origin }
 });
 
 export const deleteBook = key => ({
