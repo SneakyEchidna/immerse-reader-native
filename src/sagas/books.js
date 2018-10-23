@@ -26,7 +26,6 @@ import {
 } from '../actions';
 import { Storage } from '../api';
 import { getKey } from '../reducers/booksReducer';
-// import { Streamer } from 'epubjs-rn';
 import Streamer from '../api/Streamer';
 
 const storage = new Storage();

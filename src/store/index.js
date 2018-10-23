@@ -6,7 +6,6 @@ import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-hel
 import reducer from '../reducers';
 import rootSaga from '../sagas';
 import { middleware } from '../navigation';
-console.log(middleware);
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,

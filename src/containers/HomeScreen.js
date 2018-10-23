@@ -5,12 +5,10 @@ import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 
 class HomeScreen extends React.Component {
   componentDidMount() {
-    console.log('didmount');
     GoogleSignin.configure({
       webClientId:
         '15568065126-rvnrh8ihk6k2r6rlpoaurd0u55sgga70.apps.googleusercontent.com'
     });
-    console.log(firebase.auth().currentUser);
   }
 
   navigateToBooks = () => this.props.navigation.navigate('BooksDrawer');
@@ -27,7 +25,6 @@ class HomeScreen extends React.Component {
         return firebase.auth().signInWithCredential(credential);
       })
       .then(user => {
-        console.log(this.props);
         if (user) {
           this.navigateToBooks();
         }
@@ -48,12 +45,6 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text>Home Screen</Text>
-        <TouchableOpacity>
-          <Button
-            title="Reader"
-            onPress={() => navigation.navigate('ReaderDrawer')}
-          />
-        </TouchableOpacity>
         <GoogleSigninButton
           style={{ width: 48, height: 48 }}
           size={GoogleSigninButton.Size.Icon}

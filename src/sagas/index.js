@@ -37,7 +37,6 @@ function* callGetDefinitions({ payload }) {
 
   const callApi = async word => {
     let body;
-    console.log('going to fetch word', word);
     const getWordDefinition = wordId =>
       fetch(`https://dictionary-parser.herokuapp.com/api/definitions/${wordId}`)
         .then(a => a)

@@ -30,11 +30,5 @@ function* callAppStarted() {
   }
 }
 export default function* appStartedSaga() {
-  const now = new Date();
-  console.log(
-    'app start saga listener started',
-    now.getSeconds(),
-    now.getMilliseconds()
-  );
   yield takeLatest(APP_STARTED, callAppStarted);
 }

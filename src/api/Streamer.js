@@ -82,18 +82,14 @@ class EpubStreamer {
   }
 
   check(bookUrl) {
-    console.log('check', bookUrl);
     const re = /[^\%2]+(?=\?)/g;
     const filename = this.filename(re.exec(bookUrl)[0]);
     const targetPath = `${Dirs.DocumentDir}/${filename}`;
-    console.log('check');
     return RNFetchBlob.fs.exists(targetPath);
   }
 
   get(bookUrl) {
-    console.log('get', bookUrl);
     const re = /[^\%2]+(?=\?)/g;
-    console.log('get');
     return this.check(bookUrl).then(exists => {
       if (exists) {
         const filename = this.filename(re.exec(bookUrl)[0]);

@@ -7,8 +7,6 @@ import { appStarted } from '../actions';
 class AuthLoadingScreen extends React.Component {
   componentDidMount() {
     const { appStarted } = this.props;
-    const now = new Date();
-    console.log('Launched', now.getSeconds(), now.getMilliseconds());
     appStarted();
   }
 
