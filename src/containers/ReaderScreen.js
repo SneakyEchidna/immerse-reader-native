@@ -23,7 +23,7 @@ class ReaderScreen extends React.Component {
       setLocation,
       currentBook: { name }
     } = this.props;
-    name && setLocation(epubcfi);
+    name && setLocation(epubcfi.start.cfi);
   };
 
   debounce = (func, wait, immediate) => {
@@ -44,13 +44,17 @@ class ReaderScreen extends React.Component {
 
   findDefinition = this.debounce(cfiRange => {
     const { getDefinitions } = this.props;
-    this.book
-      .getRange(cfiRange.toString())
-      .then(range =>
-        getDefinitions(
-          range.startContainer.data.slice(range.startOffset, range.endOffset)
-        )
-      );
+    this.book.getRange(cfiRange.toString()).then(range => {
+      if (range) {
+        try {
+          return getDefinitions(
+            range.startContainer.data.slice(range.startOffset, range.endOffset)
+          );
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    });
   }, 500);
 
   getRendition = rendition => {
@@ -83,7 +87,7 @@ class ReaderScreen extends React.Component {
         <Epub
           src={book}
           {...this.renderLocation()}
-          locationChanged={this.locationChange}
+          onLocationChange={this.locationChange}
           getRendition={this.rendition}
           flow="paginated"
           onReady={this.bookReady}

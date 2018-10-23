@@ -7,12 +7,28 @@ import {
   deleteBook,
   toggleBookUpload
 } from '../actions';
+import BookListItem from '../components/BookListItem';
 
 class BooksScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Books'
+  };
+
   componentDidMount() {
+    const { loadBooksList, navigation } = this.props;
+    loadBooksList();
+    this._sub = navigation.addListener('didFocus', this.onEnter);
+  }
+
+  componentWillUnmount() {
+    this._sub.remove();
+  }
+
+  onEnter = () => {
     const { loadBooksList } = this.props;
     loadBooksList();
-  }
+  };
+
   render() {
     const {
       toReader,
@@ -23,21 +39,36 @@ class BooksScreen extends React.Component {
       navigation
     } = this.props;
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <TouchableOpacity>
-          <Text onPress={navigation.openDrawer}>Upload Book</Text>
-        </TouchableOpacity>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          padding: 10,
+          backgroundColor: 'white'
+        }}
+      >
         <FlatList
           data={booksList}
           onRefresh={loadBooksList}
           refreshing={false}
           keyExtractor={item => item.key}
           renderItem={book => (
-            <TouchableOpacity>
-              <Text onPress={() => openBook(book.item)}>{book.item.name}</Text>
-            </TouchableOpacity>
+            <BookListItem
+              onPress={openBook}
+              item={book.item}
+              onDelete={deleteBook}
+            />
           )}
         />
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            justifyItems: 'center'
+          }}
+          onPress={navigation.openDrawer}
+        >
+          <Text>Upload Book</Text>
+        </TouchableOpacity>
       </View>
     );
   }

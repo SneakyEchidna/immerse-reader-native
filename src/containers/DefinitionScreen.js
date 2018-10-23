@@ -7,12 +7,42 @@ class DefinitionScreen extends React.Component {
   render() {
     const { loading, definitions, word, addWord } = this.props;
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>{word}</Text>
+      <View
+        style={{
+          flex: 1,
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyItems: 'flex-start',
+          justifyContent: 'center',
+          padding: 5
+        }}
+      >
+        <Text
+          style={{
+            flex: 0,
+            fontSize: 20,
+            padding: 10,
+            textTransform: 'capitalize'
+          }}
+        >
+          {word}
+        </Text>
         <FlatList
           data={definitions}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={item => <Text>{item.item}</Text>}
+          renderItem={item => (
+            <Text
+              style={{
+                flex: 1,
+                borderBottomWidth: 1,
+                borderBottomColor: '#f2f5f9',
+                fontSize: 16,
+                padding: 10
+              }}
+            >
+              {item.item}
+            </Text>
+          )}
         />
       </View>
     );

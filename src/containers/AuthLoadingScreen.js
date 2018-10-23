@@ -13,7 +13,7 @@ class AuthLoadingScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>AuthLoading</Text>
+        <Text style={{ fontSize: 20 }}>Immerse Reader</Text>
       </View>
     );
   }

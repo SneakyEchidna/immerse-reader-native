@@ -19,10 +19,16 @@ const BooksDrawer = createDrawerNavigator(
   { Books: BooksScreen },
   { contentComponent: BooksUploadScreen }
 );
+BooksDrawer.navigationOptions = {
+  headerTitle: 'Library'
+};
 const ReaderDrawer = createDrawerNavigator(
   { Reader: ReaderScreen },
   { contentComponent: DefinitionScreen }
 );
+ReaderDrawer.navigationOptions = {
+  headerTitle: 'Reader'
+};
 const AppStack = createStackNavigator({
   BooksDrawer,
   ReaderDrawer
@@ -47,7 +53,8 @@ const rootNavigator = createSwitchNavigator(
     AuthLoading: AuthLoadingScreen
   },
   {
-    initialRouteName: 'AuthLoading'
+    initialRouteName: 'AuthLoading',
+    headerMode: 'none'
   }
 );
 

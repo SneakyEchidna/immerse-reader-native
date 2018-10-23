@@ -13,39 +13,60 @@ class BooksUploadScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text onPress={() => this.setState({ visible: true })}>
-          BooksUploadScreen
-        </Text>
-        <Text>Book Title</Text>
-        <TextInput
-          onChangeText={text => this.setState({ title: text })}
-          ref={this.titleRef}
-        />
-        <Text>Author</Text>
-        <TextInput
-          onChangeText={text => this.setState({ author: text })}
-          ref={this.authorRef}
-        />
-        <Text>Book .epub</Text>
-        <Text onPress={() => this.setState({ visible: true })}>
-          select Book
-        </Text>
-        <TextInput
-          value={this.state.path}
-          editable={false}
-          ref={this.fileRef}
-        />
-        <Button
-          title="Upload Book"
-          onPress={() => {
-            console.log(this.state.author, this.state.title, this.state.path);
-            this.props.uploadBook({
-              name: this.state.title,
-              author: this.state.author,
-              file: this.state.path
-            });
+        <Text
+          onPress={() => this.setState({ visible: true })}
+          style={{
+            flex: 0,
+            fontSize: 20,
+            padding: 20
           }}
-        />
+        >
+          Book Upload
+        </Text>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text style={{ marginTop: 10 }}>Book Title</Text>
+          <TextInput
+            onChangeText={text => this.setState({ title: text })}
+            ref={this.titleRef}
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: '#b6b8ba',
+              paddingTop: 0,
+              paddingBottom: 0
+            }}
+          />
+          <Text style={{ marginTop: 10 }}>Author</Text>
+          <TextInput
+            onChangeText={text => this.setState({ author: text })}
+            ref={this.authorRef}
+            style={{
+              borderBottomWidth: 1,
+              borderBottomColor: '#b6b8ba',
+              paddingTop: 0,
+              paddingBottom: 0
+            }}
+          />
+          <Text style={{ marginTop: 10 }}>Book .epub</Text>
+          <Text onPress={() => this.setState({ visible: true })}>
+            select Book
+          </Text>
+          <TextInput
+            value={this.state.path}
+            editable={false}
+            ref={this.fileRef}
+          />
+          <Button
+            title="Upload Book"
+            onPress={() => {
+              console.log(this.state.author, this.state.title, this.state.path);
+              this.props.uploadBook({
+                name: this.state.title,
+                author: this.state.author,
+                file: this.state.path
+              });
+            }}
+          />
+        </View>
         <RNFileSelector
           title={'Select File'}
           visible={this.state.visible}
