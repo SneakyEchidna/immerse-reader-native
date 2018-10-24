@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "15568065126-v6ujt12qr5eopvohqsjhg63i9ajfge0p.apps.googleusercontent.com",
+          "client_id": "15568065126-1ii9onou329l20vj01u8j9bqoq0p8ekm.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.immersereadernative",
-            "certificate_hash": "916ac52e092bae369efe76baefcd8174b2d654ba"
+            "certificate_hash": "0b22a4625e9789130671954f06c899ec038655d4"
           }
         },
         {
