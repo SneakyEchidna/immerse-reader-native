@@ -3,6 +3,8 @@ package com.immersereadernative;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.react.rnspinkit.RNSpinkitPackage;
 import ui.fileselector.RNFileSelectorPackage;
 import com.rnziparchive.RNZipArchivePackage;
 import com.futurepress.staticserver.FPStaticServerPackage;
@@ -34,6 +36,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new LinearGradientPackage(),
+            new RNSpinkitPackage(),
             new RNFileSelectorPackage(),
             new RNZipArchivePackage(),
             new FPStaticServerPackage(),

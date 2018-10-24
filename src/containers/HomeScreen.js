@@ -34,6 +34,7 @@ class HomeScreen extends React.Component {
       })
       .catch(error => {
         const { code, message } = error;
+        console.log(message);
         // For details of error codes, see the docs
         // The message contains the default Firebase string
         // representation of the error
@@ -44,7 +45,8 @@ class HomeScreen extends React.Component {
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
+        <Text style={{ fontSize: 25 }}>Immerse Reader</Text>
+        <Text style={{ fontSize: 20 }}>Login</Text>
         <GoogleSigninButton
           style={{ width: 48, height: 48 }}
           size={GoogleSigninButton.Size.Icon}

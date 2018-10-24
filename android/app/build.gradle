@@ -116,6 +116,13 @@ android {
                 keyPassword MYAPP_RELEASE_KEY_PASSWORD
             }
         }
+        debug{
+
+                storeFile file(MYAPP_RELEASE_STORE_FILE)
+                storePassword MYAPP_RELEASE_STORE_PASSWORD
+                keyAlias MYAPP_RELEASE_KEY_ALIAS
+                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        }
     }
     splits {
         abi {
@@ -160,6 +167,8 @@ allprojects {
     }
 }
 dependencies {
+    compile project(':react-native-linear-gradient')
+    compile project(':react-native-spinkit')
     compile project(':react-native-file-selector')
     compile project(':react-native-zip-archive')
     compile project(':react-native-static-server')

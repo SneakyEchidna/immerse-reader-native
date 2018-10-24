@@ -33,9 +33,12 @@ const AppStack = createStackNavigator({
   BooksDrawer,
   ReaderDrawer
 });
-const AuthStack = createStackNavigator({
-  Home: HomeScreen
-});
+const AuthStack = createStackNavigator(
+  {
+    Home: HomeScreen
+  },
+  { headerMode: 'none' }
+);
 
 const middleware = createReactNavigationReduxMiddleware(
   'root',

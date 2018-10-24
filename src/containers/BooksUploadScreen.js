@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { View, Text, TextInput, Button } from 'react-native';
 import RNFileSelector from 'react-native-file-selector';
+import ButtonComponent from 'react-native-button-component';
 import { uploadBook } from '../actions';
 
 class BooksUploadScreen extends React.Component {
-  state = { visible: false };
+  state = { visible: false, buttonState: 'upload' };
   titleRef = React.createRef();
   authorRef = React.createRef();
   fileRef = React.createRef();
@@ -14,7 +15,6 @@ class BooksUploadScreen extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Text
-          onPress={() => this.setState({ visible: true })}
           style={{
             flex: 0,
             fontSize: 20,
@@ -28,6 +28,7 @@ class BooksUploadScreen extends React.Component {
           <TextInput
             onChangeText={text => this.setState({ title: text })}
             ref={this.titleRef}
+            returnKey="next"
             style={{
               borderBottomWidth: 1,
               borderBottomColor: '#b6b8ba',
@@ -55,15 +56,31 @@ class BooksUploadScreen extends React.Component {
             editable={false}
             ref={this.fileRef}
           />
-          <Button
-            title="Upload Book"
-            onPress={() => {
-              console.log(this.state.author, this.state.title, this.state.path);
-              this.props.uploadBook({
-                name: this.state.title,
-                author: this.state.author,
-                file: this.state.path
-              });
+          <ButtonComponent
+            style={{ paddingLeft: 20, paddingRight: 20 }}
+            buttonState={`${this.props.loading}`} // "upload" or "uploading"
+            gradientStart={{ x: 0.5, y: 1 }}
+            gradientEnd={{ x: 1, y: 1 }}
+            states={{
+              false: {
+                text: 'Upload Book',
+                textStyle: { fontSize: 15, letterSpacing: 1 },
+                backgroundColors: ['#4DC7A4', '#66D37A'],
+                onPress: () => {
+                  this.props.uploadBook({
+                    name: this.state.title,
+                    author: this.state.author,
+                    file: this.state.path
+                  });
+                }
+              },
+              true: {
+                text: 'Uploading book',
+                gradientStart: { x: 0.8, y: 1 },
+                gradientEnd: { x: 1, y: 1 },
+                backgroundColors: ['#ff4949', '#fe6060'],
+                spinner: true
+              }
             }}
           />
         </View>
