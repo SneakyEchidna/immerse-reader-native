@@ -7,9 +7,6 @@ import { uploadBook } from '../actions';
 
 class BooksUploadScreen extends React.Component {
   state = { visible: false, author: null, title: null, valid: true };
-  titleRef = React.createRef();
-  authorRef = React.createRef();
-  fileRef = React.createRef();
 
   renderSelectBookText = () => {
     const { path } = this.state;
@@ -47,7 +44,6 @@ class BooksUploadScreen extends React.Component {
           <Text style={{ marginTop: 10 }}>Book Title</Text>
           <TextInput
             onChangeText={text => this.setState({ title: text })}
-            ref={this.titleRef}
             returnKey="next"
             style={{
               borderBottomWidth: 1,
@@ -59,7 +55,6 @@ class BooksUploadScreen extends React.Component {
           <Text style={{ marginTop: 10 }}>Author</Text>
           <TextInput
             onChangeText={text => this.setState({ author: text })}
-            ref={this.authorRef}
             style={{
               borderBottomWidth: 1,
               borderBottomColor: '#b6b8ba',
@@ -73,7 +68,7 @@ class BooksUploadScreen extends React.Component {
           </TouchableOpacity>
           <ButtonComponent
             style={{ paddingLeft: 20, paddingRight: 20 }}
-            buttonState={`${this.props.loading}`} // "upload" or "uploading"
+            buttonState={`${this.props.loading}`}
             gradientStart={{ x: 0.5, y: 1 }}
             gradientEnd={{ x: 1, y: 1 }}
             states={{
@@ -102,11 +97,9 @@ class BooksUploadScreen extends React.Component {
           title={'Select File'}
           visible={this.state.visible}
           onDone={path => {
-            console.log('file selected: ' + path);
             this.setState({ visible: false, path });
           }}
           onCancel={() => {
-            console.log('cancelled');
             this.setState({ visible: false });
           }}
         />
