@@ -17,17 +17,17 @@ class BooksUploadScreen extends React.Component {
     return !!author && !!title && !!path;
   };
   onUploadPress = () => {
-    const {title, author, path} = this.state;
+    const { title, author, path } = this.state;
     const { uploadBook } = this.props;
-                  if (this.validate()) {
-                    uploadBook({
-                      name: title,
-                      author,
-                      file: path
-                    });
-                    this.setState({ valid: true });
-                  } else this.setState({ valid: false });
-                }
+    if (this.validate()) {
+      uploadBook({
+        name: title,
+        author,
+        file: path
+      });
+      this.setState({ valid: true });
+    } else this.setState({ valid: false });
+  };
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -76,7 +76,7 @@ class BooksUploadScreen extends React.Component {
                 text: 'Upload Book',
                 textStyle: { fontSize: 15, letterSpacing: 1 },
                 backgroundColors: ['#4DC7A4', '#66D37A'],
-                onPress: this.onUploadPress,
+                onPress: this.onUploadPress
               },
               true: {
                 text: 'Uploading book',
