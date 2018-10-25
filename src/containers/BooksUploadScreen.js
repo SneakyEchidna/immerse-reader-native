@@ -52,7 +52,7 @@ class BooksUploadScreen extends React.Component {
             select Book
           </Text>
           <TextInput
-            value={this.state.path}
+            value={this.state.path && this.state.path.match(/[^/]+$/g)[0]}
             editable={false}
             ref={this.fileRef}
           />
