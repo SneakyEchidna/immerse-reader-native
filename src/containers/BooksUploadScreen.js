@@ -6,7 +6,7 @@ import ButtonComponent from 'react-native-button-component';
 import { uploadBook } from '../actions';
 
 class BooksUploadScreen extends React.Component {
-  state = { visible: false, buttonState: 'upload' };
+  state = { visible: false, author: null, title: null, valid: true };
   titleRef = React.createRef();
   authorRef = React.createRef();
   fileRef = React.createRef();
@@ -15,6 +15,22 @@ class BooksUploadScreen extends React.Component {
     const { path } = this.state;
     return path ? path.match(/[^/]+$/g)[0] : 'Select book'; // leave only name and extension
   };
+  validate = () => {
+    const { author, title, path } = this.state;
+    return !!author && !!title && !!path;
+  };
+  onUploadPress = () => {
+    const {title, author, path} = this.state;
+    const { uploadBook } = this.props;
+                  if (this.validate()) {
+                    uploadBook({
+                      name: title,
+                      author,
+                      file: path
+                    });
+                    this.setState({ valid: true });
+                  } else this.setState({ valid: false });
+                }
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -65,13 +81,7 @@ class BooksUploadScreen extends React.Component {
                 text: 'Upload Book',
                 textStyle: { fontSize: 15, letterSpacing: 1 },
                 backgroundColors: ['#4DC7A4', '#66D37A'],
-                onPress: () => {
-                  this.props.uploadBook({
-                    name: this.state.title,
-                    author: this.state.author,
-                    file: this.state.path
-                  });
-                }
+                onPress: this.onUploadPress,
               },
               true: {
                 text: 'Uploading book',
@@ -82,6 +92,11 @@ class BooksUploadScreen extends React.Component {
               }
             }}
           />
+          {!this.state.valid && (
+            <Text style={{ color: 'red', paddingTop: 10 }}>
+              You need to specify author and book title
+            </Text>
+          )}
         </View>
         <RNFileSelector
           title={'Select File'}
