@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity } from 'react-native';
 import RNFileSelector from 'react-native-file-selector';
 import ButtonComponent from 'react-native-button-component';
 import { uploadBook } from '../actions';
@@ -11,6 +11,10 @@ class BooksUploadScreen extends React.Component {
   authorRef = React.createRef();
   fileRef = React.createRef();
 
+  renderSelectBookText = () => {
+    const { path } = this.state;
+    return path ? path.match(/[^/]+$/g)[0] : 'Select book'; // leave only name and extension
+  };
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -48,14 +52,9 @@ class BooksUploadScreen extends React.Component {
             }}
           />
           <Text style={{ marginTop: 10 }}>Book .epub</Text>
-          <Text onPress={() => this.setState({ visible: true })}>
-            select Book
-          </Text>
-          <TextInput
-            value={this.state.path && this.state.path.match(/[^/]+$/g)[0]}
-            editable={false}
-            ref={this.fileRef}
-          />
+          <TouchableOpacity onPress={() => this.setState({ visible: true })}>
+            <TextInput value={this.renderSelectBookText()} editable={false} />
+          </TouchableOpacity>
           <ButtonComponent
             style={{ paddingLeft: 20, paddingRight: 20 }}
             buttonState={`${this.props.loading}`} // "upload" or "uploading"
