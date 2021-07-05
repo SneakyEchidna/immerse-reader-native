@@ -34,7 +34,7 @@ const streamer = new Streamer();
 function* callLoadBooksList() {
   const getBooksList = async uid => {
     const data = await storage.getBooks(uid);
-    const entries = Object.entries(data);
+    const entries = Object.entries(data || {});
     const books = entries.map(([key, value]) => ({
       name: value.name,
       author: value.author,
@@ -49,7 +49,6 @@ function* callLoadBooksList() {
     uid = yield select(getUid);
   }
   const booksList = yield getBooksList(uid);
-
   yield put(setBooksList(booksList));
 }
 

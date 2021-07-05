@@ -28,6 +28,30 @@ class BooksScreen extends React.Component {
     const { loadBooksList } = this.props;
     loadBooksList();
   };
+  renderBooksList = () => {
+    const { booksList, openBook, deleteBook } = this.props;
+    if (booksList && booksList.length)
+      return (
+        <FlatList
+          data={booksList}
+          onRefresh={loadBooksList}
+          refreshing={false}
+          keyExtractor={item => item.key}
+          renderItem={book => (
+            <BookListItem
+              onPress={openBook}
+              item={book.item}
+              onDelete={deleteBook}
+            />
+          )}
+        />
+      );
+    return (
+      <Text style={{ flex: 1, alignSelf: 'center' }}>
+        {"You don't have any books"}
+      </Text>
+    );
+  };
 
   render() {
     const {
@@ -47,19 +71,7 @@ class BooksScreen extends React.Component {
           backgroundColor: 'white'
         }}
       >
-        <FlatList
-          data={booksList}
-          onRefresh={loadBooksList}
-          refreshing={false}
-          keyExtractor={item => item.key}
-          renderItem={book => (
-            <BookListItem
-              onPress={openBook}
-              item={book.item}
-              onDelete={deleteBook}
-            />
-          )}
-        />
+        {this.renderBooksList()}
         <TouchableOpacity
           style={{
             alignItems: 'center',
